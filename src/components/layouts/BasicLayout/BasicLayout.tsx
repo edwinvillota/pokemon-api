@@ -11,12 +11,6 @@ export const StyledContainer = styled.main`
   min-height: 100vh;
 `;
 
-export const StyledContentWrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-`;
-
 export const BasicLayout = () => {
   return (
     <StyledContainer>

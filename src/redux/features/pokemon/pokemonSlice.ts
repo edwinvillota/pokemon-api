@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { apiClient } from "../../../services/client/apiClient";
+import { createSlice } from "@reduxjs/toolkit";
 
 type PokemonState = {
   isLoading: boolean;
@@ -15,21 +14,6 @@ export const pokemonSlice = createSlice({
   name: "pokemon",
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchPokemon.fulfilled, (state, action) => {
-      state.pokemon = action.payload;
-    });
-  },
 });
-
-export const {} = pokemonSlice.actions;
-
-export const fetchPokemon = createAsyncThunk(
-  "pokemon/fetchPokemon",
-  async () => {
-    const response = await apiClient.get();
-    return response;
-  }
-);
 
 export default pokemonSlice.reducer;

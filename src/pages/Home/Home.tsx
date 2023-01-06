@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 import { Container } from "@mui/system";
 import { useMemo } from "react";
 import { PokemonCard } from "../../components/molecules/PokemonCard";
@@ -24,7 +24,7 @@ export const Home = () => {
         paddingY: 8,
       }}
     >
-      <Grid container spacing={2} justifyContent="space-between">
+      <Grid container spacing={2} justifyContent="center">
         {pokemonCards}
       </Grid>
     </Container>

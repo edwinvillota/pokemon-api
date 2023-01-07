@@ -21,7 +21,7 @@ export const DetailsStats = ({ pokemon }: DetailsStatsProps) => {
           ))}
         </Stack>
       </Grid>
-      <Grid item container>
+      <Grid item container justifyContent="space-between">
         {pokemon.stats.map((stat) => (
           <Grid item xs={5} key={`${id}_${stat.stat.name}`}>
             <PokemonCardStat name={stat.stat.name} value={stat.base_stat} />

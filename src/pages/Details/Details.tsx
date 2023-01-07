@@ -12,7 +12,7 @@ export const Details = () => {
 
   const pokemon = useMemo(() => {
     return data?.results.find((pokemon) => pokemon.name === name);
-  }, [data]);
+  }, [data?.results, name]);
 
   if (!pokemon) return null;
 
@@ -23,14 +23,14 @@ export const Details = () => {
           {pokemon.name}
         </Typography>
 
-        <Grid container rowGap={4}>
+        <Grid container rowGap={4} justifyContent="center">
           <Grid item md={6}>
             <DetailsImage
               src={pokemon.sprites.other["official-artwork"].front_default}
               alt={pokemon.name}
             />
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={6}>
             <DetailsStats pokemon={pokemon} />
           </Grid>
           <Grid item xs={12}>

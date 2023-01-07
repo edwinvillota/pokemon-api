@@ -8,7 +8,13 @@ import {
   Typography,
   Grid,
   Button,
+  IconButton,
+  CardActions,
+  Tooltip,
 } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import CompareIcon from "@mui/icons-material/CompareArrows";
+import DetailsIcon from "@mui/icons-material/CatchingPokemon";
 import { Pokemon } from "../../../redux/api/models/Pokemon";
 import styled from "styled-components";
 
@@ -72,16 +78,17 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
               </Grid>
             ))}
           </Grid>
-          <Divider />
-          <Stack direction="row" justifyContent="space-between" gap={2}>
-            <Button variant="contained" fullWidth>
-              Details
-            </Button>
-            <Button variant="contained" fullWidth color="secondary">
-              Compare
-            </Button>
-          </Stack>
         </Stack>
+        <Divider />
+        <CardActions>
+          <Button>Details</Button>
+          <Button>Compare</Button>
+          <Tooltip title="Add to favorites">
+            <IconButton>
+              <FavoriteIcon />
+            </IconButton>
+          </Tooltip>
+        </CardActions>
       </CardContent>
     </Card>
   );

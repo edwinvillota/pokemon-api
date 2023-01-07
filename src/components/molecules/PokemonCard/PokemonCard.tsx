@@ -35,7 +35,15 @@ export const PokemonCardStat = ({ name, value }: PokemonCardStat) => {
 
 export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   return (
-    <Card sx={{ width: 260 }}>
+    <Card sx={{ width: 260, position: "relative" }} key={pokemon.id}>
+      <Typography
+        variant="caption"
+        sx={{
+          position: "absolute",
+          top: "15px",
+          left: "15px",
+        }}
+      >{`#${pokemon.id}`}</Typography>
       <StyledCardMedia
         sx={{ height: 150 }}
         image={pokemon.sprites.other["official-artwork"].front_default}

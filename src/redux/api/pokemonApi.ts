@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { RootState } from "../store";
 import { PokemonItem, Pokemon } from "./models/Pokemon";
 
 export type PaginatedResponse<T> = {
@@ -8,16 +9,38 @@ export type PaginatedResponse<T> = {
   results: T[];
 };
 
+export type GetAllPokemonParams = {
+  infinityScroll?: boolean;
+};
+
+const BASE_URL = "https://pokeapi.co/api/v2";
+
 export const pokemonSlice = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://pokeapi.co/api/v2" }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-    getAllPokemon: builder.query<PaginatedResponse<Pokemon>, void>({
-      async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
-        const { data: pokemonListData } = await fetchWithBQ("/pokemon");
+    getAllPokemon: builder.query<
+      PaginatedResponse<Pokemon>,
+      GetAllPokemonParams
+    >({
+      async queryFn(args, api, _extraOptions, fetchWithBQ) {
+        const currentState = api.getState() as RootState;
+        const currentData = pokemonSlice.endpoints.getAllPokemon.select({
+          infinityScroll: true,
+        })(currentState).data;
 
-        const pokemonListResponse =
-          pokemonListData as PaginatedResponse<PokemonItem>;
+        let pokemonListResponse: PaginatedResponse<PokemonItem>;
+
+        if (args.infinityScroll && currentData) {
+          const { data } = await fetchWithBQ(
+            currentData.next.replace(BASE_URL, "")
+          );
+          pokemonListResponse = data as PaginatedResponse<PokemonItem>;
+        } else {
+          const { data } = await fetchWithBQ("/pokemon");
+          pokemonListResponse = data as PaginatedResponse<PokemonItem>;
+        }
+
         const pokemonList = pokemonListResponse.results;
 
         const promises = pokemonList.map((pokemonItem) =>
@@ -38,6 +61,15 @@ export const pokemonSlice = createApi({
             results,
           },
         };
+      },
+      merge: (currentCache, newResponse, { arg }) => {
+        if (arg.infinityScroll) {
+          newResponse.results = [
+            ...currentCache.results,
+            ...newResponse.results,
+          ];
+        }
+        return newResponse;
       },
     }),
     getPokemonByName: builder.query<Pokemon, string>({

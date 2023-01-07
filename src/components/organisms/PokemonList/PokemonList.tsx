@@ -1,4 +1,5 @@
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
+import { Stack } from "@mui/system";
 import { useMemo } from "react";
 import { Pokemon } from "../../../redux/api/models/Pokemon";
 import { useGetAllPokemonQuery } from "../../../redux/api/pokemonApi";
@@ -22,15 +23,25 @@ const PokemonCards = ({ pokemonList }: PokemonCardsProps) => {
 };
 
 export const PokemonList = () => {
-  const { data, isLoading } = useGetAllPokemonQuery();
+  const { data, refetch, isFetching } = useGetAllPokemonQuery({
+    infinityScroll: true,
+  });
+
+  const handleLoadMore = () => {
+    refetch();
+  };
 
   return (
-    <Grid container spacing={2} justifyContent="center">
-      {isLoading ? (
-        <PokemonListSkeleton />
-      ) : (
+    <>
+      <Grid container spacing={2} justifyContent="center">
         <PokemonCards pokemonList={data?.results} />
-      )}
-    </Grid>
+        {isFetching && <PokemonListSkeleton />}
+      </Grid>
+      <Stack direction="row" justifyContent="center" marginY={4}>
+        <Button variant="text" onClick={handleLoadMore}>
+          Load more
+        </Button>
+      </Stack>
+    </>
   );
 };

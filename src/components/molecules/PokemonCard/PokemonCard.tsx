@@ -35,7 +35,7 @@ export const PokemonCardStat = ({ name, value }: PokemonCardStat) => {
 
 export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   return (
-    <Card sx={{ minWidth: 260, maxWidth: 260 }}>
+    <Card sx={{ width: 260 }}>
       <StyledCardMedia
         sx={{ height: 150 }}
         image={pokemon.sprites.other["official-artwork"].front_default}

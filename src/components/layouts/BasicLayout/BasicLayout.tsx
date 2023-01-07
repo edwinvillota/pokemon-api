@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import { Header } from "../../molecules/Header";
-import { Footer } from "../../molecules/Footer";
 import { Container } from "@mui/system";
 
 export const StyledContainer = styled.main`
@@ -17,7 +16,6 @@ export const BasicLayout = () => {
       <Header />
       <Container>
         <Outlet />
-        <Footer />
       </Container>
     </StyledContainer>
   );

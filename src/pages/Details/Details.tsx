@@ -1,9 +1,10 @@
-import { Container, Grid, Stack, Typography } from "@mui/material";
+import { Container, Divider, Grid, Stack, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useGetAllPokemonQuery } from "../../redux/api/pokemonApi";
 import { DetailsImage } from "./DetailsImage";
 import { DetailsStats } from "./DetailsStats";
+import { StatsChart } from "./StatsChart";
 
 export const Details = () => {
   const { name } = useParams();
@@ -22,7 +23,7 @@ export const Details = () => {
           {pokemon.name}
         </Typography>
 
-        <Grid container>
+        <Grid container rowGap={4}>
           <Grid item md={6}>
             <DetailsImage
               src={pokemon.sprites.other["official-artwork"].front_default}
@@ -31,6 +32,9 @@ export const Details = () => {
           </Grid>
           <Grid item>
             <DetailsStats pokemon={pokemon} />
+          </Grid>
+          <Grid item xs={12}>
+            <StatsChart stats={pokemon.stats} />
           </Grid>
         </Grid>
       </Stack>

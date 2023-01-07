@@ -17,6 +17,7 @@ import CompareIcon from "@mui/icons-material/CompareArrows";
 import DetailsIcon from "@mui/icons-material/CatchingPokemon";
 import { Pokemon } from "../../../redux/api/models/Pokemon";
 import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 
 type PokemonCardProps = { pokemon: Pokemon };
 type PokemonCardStat = {
@@ -40,6 +41,8 @@ export const PokemonCardStat = ({ name, value }: PokemonCardStat) => {
 };
 
 export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
+  const navigate = useNavigate();
+
   return (
     <Card sx={{ width: 260, position: "relative" }} key={pokemon.id}>
       <Typography
@@ -81,7 +84,9 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
         </Stack>
         <Divider />
         <CardActions>
-          <Button>Details</Button>
+          <Button onClick={() => navigate(`/details/${pokemon.name}`)}>
+            Details
+          </Button>
           <Button>Compare</Button>
           <Tooltip title="Add to favorites">
             <IconButton>

@@ -47,6 +47,14 @@ export const pokemonSlice = createSlice({
       ),
       isComparisonFull: !(state.comparison.length >= 1),
     }),
+    openModal: (state) => ({
+      ...state,
+      isModalOpen: true,
+    }),
+    closeModal: (state) => ({
+      ...state,
+      isModalOpen: false,
+    }),
   },
 });
 
@@ -55,6 +63,8 @@ export const {
   removeFromFavorites,
   addToCompare,
   removeFromCompare,
+  openModal,
+  closeModal,
 } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

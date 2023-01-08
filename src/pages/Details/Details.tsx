@@ -1,18 +1,13 @@
 import { Container, Divider, Grid, Stack, Typography } from "@mui/material";
-import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { useGetAllPokemonQuery } from "../../redux/api/pokemonApi";
+import { useGetPokemonByNameQuery } from "../../redux/api/pokemonApi";
 import { DetailsImage } from "./DetailsImage";
 import { DetailsStats } from "./DetailsStats";
 import { StatsChart } from "./StatsChart";
 
 export const Details = () => {
   const { name } = useParams();
-  const { data } = useGetAllPokemonQuery({});
-
-  const pokemon = useMemo(() => {
-    return data?.results.find((pokemon) => pokemon.name === name);
-  }, [data?.results, name]);
+  const { data: pokemon } = useGetPokemonByNameQuery(name, { skip: !name });
 
   if (!pokemon) return null;
 

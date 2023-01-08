@@ -72,10 +72,10 @@ export const pokemonSlice = createApi({
         return newResponse;
       },
     }),
-    getPokemonByName: builder.query<Pokemon, string>({
+    getPokemonByName: builder.query<Pokemon, string | undefined>({
       query: (name) => `/pokemon/${name}`,
     }),
   }),
 });
 
-export const { useGetAllPokemonQuery } = pokemonSlice;
+export const { useGetAllPokemonQuery, useGetPokemonByNameQuery } = pokemonSlice;

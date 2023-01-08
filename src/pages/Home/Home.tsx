@@ -33,7 +33,7 @@ export const Home = () => {
         <PokemonList />
       </Container>
       <Snackbar
-        open={isComparisonFull}
+        open={isComparisonFull && !isModalOpen}
         anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
       >
         <Alert

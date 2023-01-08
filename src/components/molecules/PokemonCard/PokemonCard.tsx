@@ -25,6 +25,7 @@ type PokemonCardProps = {
   inComparison?: boolean;
   isComparisonFull?: boolean;
   onToogleCompare?: (pokemonId: number) => void;
+  withActions?: boolean;
 };
 type PokemonCardStatProps = {
   name: string;
@@ -53,6 +54,7 @@ export const PokemonCard = ({
   inComparison,
   onToogleCompare,
   isComparisonFull,
+  withActions = true,
 }: PokemonCardProps) => {
   const navigate = useNavigate();
   const id = useId();
@@ -106,27 +108,33 @@ export const PokemonCard = ({
             ))}
           </Grid>
         </Stack>
-        <Divider />
-        <CardActions>
-          <Button onClick={() => navigate(`/details/${pokemon.name}`)}>
-            Details
-          </Button>
-          <Button
-            disabled={isComparisonFull && !inComparison}
-            color={inComparison ? "secondary" : "primary"}
-            onClick={() => onToogleCompare && onToogleCompare(pokemon.id)}
-          >
-            Compare
-          </Button>
-          <Tooltip title="Add to favorites">
-            <IconButton
-              color={isFavorite ? "error" : "default"}
-              onClick={() => onToogleFavorite && onToogleFavorite(pokemon.id)}
-            >
-              <FavoriteIcon />
-            </IconButton>
-          </Tooltip>
-        </CardActions>
+        {withActions && (
+          <>
+            <Divider />
+            <CardActions>
+              <Button onClick={() => navigate(`/details/${pokemon.name}`)}>
+                Details
+              </Button>
+              <Button
+                disabled={isComparisonFull && !inComparison}
+                color={inComparison ? "secondary" : "primary"}
+                onClick={() => onToogleCompare && onToogleCompare(pokemon.id)}
+              >
+                {inComparison ? "Remove" : "Compare"}
+              </Button>
+              <Tooltip title="Add to favorites">
+                <IconButton
+                  color={isFavorite ? "error" : "default"}
+                  onClick={() =>
+                    onToogleFavorite && onToogleFavorite(pokemon.id)
+                  }
+                >
+                  <FavoriteIcon />
+                </IconButton>
+              </Tooltip>
+            </CardActions>
+          </>
+        )}
       </CardContent>
     </Card>
   );

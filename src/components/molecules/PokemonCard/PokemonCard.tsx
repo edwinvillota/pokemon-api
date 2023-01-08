@@ -16,11 +16,15 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Pokemon } from "../../../redux/api/models/Pokemon";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useId } from "react";
 
 type PokemonCardProps = {
   pokemon: Pokemon;
   isFavorite?: boolean;
   onToogleFavorite?: (pokemonId: number) => void;
+  inComparison?: boolean;
+  isComparisonFull?: boolean;
+  onToogleCompare?: (pokemonId: number) => void;
 };
 type PokemonCardStatProps = {
   name: string;
@@ -46,11 +50,25 @@ export const PokemonCard = ({
   pokemon,
   isFavorite,
   onToogleFavorite,
+  inComparison,
+  onToogleCompare,
+  isComparisonFull,
 }: PokemonCardProps) => {
   const navigate = useNavigate();
+  const id = useId();
 
   return (
-    <Card sx={{ width: 260, position: "relative" }} key={pokemon.id}>
+    <Card
+      sx={{
+        width: 260,
+        position: "relative",
+        borderStyle: "solid",
+        borderWidth: 2,
+        transition: "border-color 0.5s ease-in",
+        borderColor: inComparison ? "#9c27b0" : "transparent",
+      }}
+      key={pokemon.id}
+    >
       <Typography
         variant="caption"
         sx={{
@@ -77,12 +95,12 @@ export const PokemonCard = ({
         <Stack paddingY={2} gap={2}>
           <Stack direction="row" gap={1} justifyContent="center">
             {pokemon.types.map((type) => (
-              <Chip label={type.type.name} />
+              <Chip label={type.type.name} key={`${id}_${type.type.name}`} />
             ))}
           </Stack>
           <Grid container gap={1} justifyContent="center">
             {pokemon.stats.map((stat) => (
-              <Grid item xs={5}>
+              <Grid item xs={5} key={`${id}_${stat.stat.name}`}>
                 <PokemonCardStat name={stat.stat.name} value={stat.base_stat} />
               </Grid>
             ))}
@@ -93,7 +111,13 @@ export const PokemonCard = ({
           <Button onClick={() => navigate(`/details/${pokemon.name}`)}>
             Details
           </Button>
-          <Button>Compare</Button>
+          <Button
+            disabled={isComparisonFull && !inComparison}
+            color={inComparison ? "secondary" : "primary"}
+            onClick={() => onToogleCompare && onToogleCompare(pokemon.id)}
+          >
+            Compare
+          </Button>
           <Tooltip title="Add to favorites">
             <IconButton
               color={isFavorite ? "error" : "default"}

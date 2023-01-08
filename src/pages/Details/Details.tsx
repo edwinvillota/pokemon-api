@@ -1,4 +1,10 @@
-import { Container, Divider, Grid, Stack, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetPokemonByNameQuery } from "../../redux/api/pokemonApi";
 import { DetailsImage } from "./DetailsImage";
@@ -7,7 +13,11 @@ import { StatsChart } from "./StatsChart";
 
 export const Details = () => {
   const { name } = useParams();
-  const { data: pokemon } = useGetPokemonByNameQuery(name, { skip: !name });
+  const { data: pokemon, isLoading } = useGetPokemonByNameQuery(name, {
+    skip: !name,
+  });
+
+  if (isLoading) return <CircularProgress />;
 
   if (!pokemon) return null;
 

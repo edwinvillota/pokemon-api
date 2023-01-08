@@ -1,19 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type PokemonState = {
-  isLoading: boolean;
-  pokemon: any[];
+  favorites: number[];
+  comparation: number[];
 };
 
 const initialState: PokemonState = {
-  isLoading: false,
-  pokemon: [],
+  favorites: [],
+  comparation: [],
 };
 
 export const pokemonSlice = createSlice({
   name: "pokemon",
   initialState,
-  reducers: {},
+  reducers: {
+    addToFavorites: (state, action: PayloadAction<number>) => ({
+      ...state,
+      favorites: [...state.favorites, action.payload],
+    }),
+    removeFromFavorites: (state, action: PayloadAction<number>) => ({
+      ...state,
+      favorites: state.favorites.filter(
+        (pokemonId) => pokemonId !== action.payload
+      ),
+    }),
+  },
 });
+
+export const { addToFavorites, removeFromFavorites } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

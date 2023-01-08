@@ -13,14 +13,16 @@ import {
   Tooltip,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import CompareIcon from "@mui/icons-material/CompareArrows";
-import DetailsIcon from "@mui/icons-material/CatchingPokemon";
 import { Pokemon } from "../../../redux/api/models/Pokemon";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-type PokemonCardProps = { pokemon: Pokemon };
-type PokemonCardStat = {
+type PokemonCardProps = {
+  pokemon: Pokemon;
+  isFavorite?: boolean;
+  onToogleFavorite?: (pokemonId: number) => void;
+};
+type PokemonCardStatProps = {
   name: string;
   value: number;
 };
@@ -29,7 +31,7 @@ const StyledCardMedia = styled(CardMedia)`
   background-size: contain;
 `;
 
-export const PokemonCardStat = ({ name, value }: PokemonCardStat) => {
+export const PokemonCardStat = ({ name, value }: PokemonCardStatProps) => {
   return (
     <Stack gap={0}>
       <Typography variant="overline" noWrap gutterBottom>
@@ -40,7 +42,11 @@ export const PokemonCardStat = ({ name, value }: PokemonCardStat) => {
   );
 };
 
-export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
+export const PokemonCard = ({
+  pokemon,
+  isFavorite,
+  onToogleFavorite,
+}: PokemonCardProps) => {
   const navigate = useNavigate();
 
   return (
@@ -89,7 +95,10 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
           </Button>
           <Button>Compare</Button>
           <Tooltip title="Add to favorites">
-            <IconButton>
+            <IconButton
+              color={isFavorite ? "error" : "default"}
+              onClick={() => onToogleFavorite && onToogleFavorite(pokemon.id)}
+            >
               <FavoriteIcon />
             </IconButton>
           </Tooltip>

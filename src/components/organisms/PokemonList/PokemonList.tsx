@@ -112,6 +112,7 @@ export const PokemonList = () => {
           <FormControl fullWidth>
             <InputLabel>Search</InputLabel>
             <Input
+              inputProps={{ role: "search" }}
               value={searchKey}
               onChange={(e) => setSearchKey(e.target.value)}
               endAdornment={

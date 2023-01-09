@@ -70,7 +70,14 @@ export const ComparisonModal = ({
               <Grid item>
                 <PokemonCard pokemon={pokemon1} withActions={false} />
               </Grid>
-              <Grid item display="flex" alignItems="center">
+              <Grid
+                item
+                display="flex"
+                alignItems="center"
+                xs={12}
+                md="auto"
+                justifyContent="center"
+              >
                 <Typography variant="h1" fontWeight="bold" height="auto">
                   VS
                 </Typography>

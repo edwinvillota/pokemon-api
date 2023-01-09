@@ -77,6 +77,8 @@ export const ComparisonChart = ({ pokemonToCompare }: ComparisonChartProps) => {
         valueYField: "value",
         tooltip: am5.Tooltip.new(root, {}),
         categoryXField: "category",
+        fill: am5.color(0xf05256),
+        stroke: am5.color(0xf05256),
       })
     );
     series2.get("tooltip")?.label.set("text", pokemonToCompare[1].name);

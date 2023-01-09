@@ -28,6 +28,13 @@ export const pokemonSlice = createSlice({
         (pokemonId) => pokemonId !== action.payload
       ),
     }),
+    resetComparison: (state) => {
+      return {
+        ...state,
+        isComparisonFull: false,
+        comparison: [],
+      };
+    },
     addToCompare: (state, action: PayloadAction<number>) => {
       const pokemonId = action.payload;
 
@@ -65,6 +72,7 @@ export const {
   removeFromCompare,
   openModal,
   closeModal,
+  resetComparison,
 } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

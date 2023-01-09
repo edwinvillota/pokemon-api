@@ -5,6 +5,7 @@ import { PokemonList } from "../../components/organisms/PokemonList";
 import {
   closeModal,
   openModal,
+  resetComparison,
 } from "../../redux/features/pokemon/pokemonSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
@@ -16,6 +17,10 @@ export const Home = () => {
 
   const handleOpenModal = () => {
     dispatch(openModal());
+  };
+
+  const handleResetComparison = () => {
+    dispatch(resetComparison());
   };
 
   const handleCloseModal = () => {
@@ -38,13 +43,20 @@ export const Home = () => {
       >
         <Alert
           severity="info"
-          action={
+          action={[
             <Button color="inherit" size="small" onClick={handleOpenModal}>
-              OPEN
-            </Button>
-          }
+              OPEN MODAL
+            </Button>,
+            <Button
+              color="inherit"
+              size="small"
+              onClick={handleResetComparison}
+            >
+              RESET COMPARISON
+            </Button>,
+          ]}
         >
-          Open comparison modal
+          Comparison is ready
         </Alert>
       </Snackbar>
       <ComparisonModal open={isModalOpen} handleCloseModal={handleCloseModal} />

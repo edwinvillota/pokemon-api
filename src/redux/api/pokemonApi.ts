@@ -51,7 +51,23 @@ export const pokemonApi = createApi({
           data: Pokemon;
         }[];
 
-        const results = pokemonResponses?.map((response) => response.data);
+        const results = pokemonResponses?.map((response) => {
+          const {
+            data: { id, name, height, order, weight, sprites, stats, types },
+          } = response;
+          const optimizedPokemon: Pokemon = {
+            id,
+            name,
+            height,
+            order,
+            weight,
+            sprites,
+            stats,
+            types,
+          };
+
+          return optimizedPokemon;
+        });
 
         return {
           data: {

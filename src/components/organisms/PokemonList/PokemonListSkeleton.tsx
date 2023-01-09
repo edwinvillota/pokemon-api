@@ -14,7 +14,7 @@ export const PokemonListSkeleton = ({
   return (
     <>
       {skeletons.map((_, index) => (
-        <Grid item key={`${id}-${index}`}>
+        <Grid item key={`${id}-${index}`} data-testid="skeleton">
           <Skeleton
             variant="rectangular"
             height={564}

@@ -16,14 +16,10 @@ export type PokemonStat = {
 };
 
 export type PokemonType = {
-  slot: 1;
+  slot: number;
   type: {
     name: string;
   };
-};
-
-export type PokemonForm = {
-  name: string;
 };
 
 export type Pokemon = {
@@ -35,7 +31,6 @@ export type Pokemon = {
   sprites: PokemonSprites;
   stats: PokemonStat[];
   types: PokemonType[];
-  forms: PokemonForm[];
 };
 
 export type PokemonItem = {

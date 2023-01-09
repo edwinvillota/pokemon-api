@@ -61,6 +61,7 @@ export const PokemonCard = ({
 
   return (
     <Card
+      elevation={withActions ? 2 : 0}
       sx={{
         width: 260,
         position: "relative",

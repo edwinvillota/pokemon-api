@@ -37,7 +37,6 @@ export const ComparisonChart = ({ pokemonToCompare }: ComparisonChartProps) => {
     let root = am5.Root.new("ComparisonChart");
 
     let chart = root.container.children.push(am5radar.RadarChart.new(root, {}));
-    console.log(parsedData);
 
     // Create axes
     let xAxis = chart.xAxes.push(

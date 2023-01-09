@@ -15,6 +15,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import { useAppSelector } from "../../../redux/hooks";
 import { useGetAllPokemonQuery } from "../../../redux/api/pokemonApi";
 import { PokemonCard } from "../../molecules/PokemonCard";
+import { ComparisonChart } from "./ComparisonChart";
 
 export type ComparisonModalProps = DialogProps & {
   handleCloseModal: () => void;
@@ -29,7 +30,10 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const ComparisonModal = (props: ComparisonModalProps) => {
+export const ComparisonModal = ({
+  handleCloseModal,
+  ...props
+}: ComparisonModalProps) => {
   const { data: pokemonList } = useGetAllPokemonQuery({});
   const comparison = useAppSelector((state) => state.pokemon.comparison);
 
@@ -55,7 +59,7 @@ export const ComparisonModal = (props: ComparisonModalProps) => {
                 edge="start"
                 color="inherit"
                 aria-label="close"
-                onClick={props.handleCloseModal}
+                onClick={handleCloseModal}
               >
                 <CloseIcon />
               </IconButton>
@@ -73,6 +77,9 @@ export const ComparisonModal = (props: ComparisonModalProps) => {
               </Grid>
               <Grid item>
                 <PokemonCard pokemon={pokemon2} withActions={false} />
+              </Grid>
+              <Grid item xs={12} md={8}>
+                <ComparisonChart pokemonToCompare={[pokemon1, pokemon2]} />
               </Grid>
             </Grid>
           </DialogContent>

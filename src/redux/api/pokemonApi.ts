@@ -61,7 +61,15 @@ export const pokemonApi = createApi({
             height,
             order,
             weight,
-            sprites,
+            sprites: {
+              front_default: sprites.front_default,
+              other: {
+                "official-artwork": {
+                  front_default:
+                    sprites.other["official-artwork"].front_default,
+                },
+              },
+            },
             stats,
             types,
           };

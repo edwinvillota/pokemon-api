@@ -15,7 +15,7 @@ export type GetAllPokemonParams = {
 
 const BASE_URL = "https://pokeapi.co/api/v2";
 
-export const pokemonSlice = createApi({
+export const pokemonApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
@@ -25,7 +25,7 @@ export const pokemonSlice = createApi({
     >({
       async queryFn(args, api, _extraOptions, fetchWithBQ) {
         const currentState = api.getState() as RootState;
-        const currentData = pokemonSlice.endpoints.getAllPokemon.select({
+        const currentData = pokemonApi.endpoints.getAllPokemon.select({
           infinityScroll: true,
         })(currentState).data;
 
@@ -78,4 +78,4 @@ export const pokemonSlice = createApi({
   }),
 });
 
-export const { useGetAllPokemonQuery, useGetPokemonByNameQuery } = pokemonSlice;
+export const { useGetAllPokemonQuery, useGetPokemonByNameQuery } = pokemonApi;

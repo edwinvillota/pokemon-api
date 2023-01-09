@@ -44,13 +44,19 @@ export const Home = () => {
         <Alert
           severity="info"
           action={[
-            <Button color="inherit" size="small" onClick={handleOpenModal}>
+            <Button
+              color="inherit"
+              size="small"
+              onClick={handleOpenModal}
+              key={"open_modal"}
+            >
               OPEN MODAL
             </Button>,
             <Button
               color="inherit"
               size="small"
               onClick={handleResetComparison}
+              key={"reset_comparison"}
             >
               RESET COMPARISON
             </Button>,

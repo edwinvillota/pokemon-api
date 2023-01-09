@@ -1,8 +1,16 @@
-import { Button, Grid } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  Grid,
+  Input,
+  InputAdornment,
+  InputLabel,
+} from "@mui/material";
 import { Stack } from "@mui/system";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useSearchPokemon } from "../../../hooks/useSearch";
 import { Pokemon } from "../../../redux/api/models/Pokemon";
-import { useGetAllPokemonQuery } from "../../../redux/api/pokemonApi";
 import {
   addToCompare,
   addToFavorites,
@@ -12,6 +20,9 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { PokemonCard } from "../../molecules/PokemonCard";
 import { PokemonListSkeleton } from "./PokemonListSkeleton";
+import SearchIcon from "@mui/icons-material/Search";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 type PokemonCardsProps = {
   pokemonList: Pokemon[] | undefined;
@@ -56,14 +67,18 @@ const PokemonCards = ({
 };
 
 export const PokemonList = () => {
-  const { data, refetch, isFetching } = useGetAllPokemonQuery({
-    infinityScroll: true,
+  const [searchKey, setSearchKey] = useState("");
+  const [onlyFavorites, setOnlyFavorites] = useState(false);
+
+  const { pokemonList, refetch, isFetching } = useSearchPokemon({
+    key: searchKey,
+    onlyFavorites,
   });
+
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector((state) => state.pokemon.favorites);
-  const comparison = useAppSelector((state) => state.pokemon.comparison);
-  const isComparisonFull = useAppSelector(
-    (state) => state.pokemon.isComparisonFull
+
+  const { favorites, comparison, isComparisonFull } = useAppSelector(
+    (state) => state.pokemon
   );
 
   const getIsFavorite = (pokemonId: number) => favorites.includes(pokemonId);
@@ -91,10 +106,34 @@ export const PokemonList = () => {
   };
 
   return (
-    <>
+    <Stack gap={4}>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={8}>
+          <FormControl fullWidth>
+            <InputLabel>Search</InputLabel>
+            <Input
+              value={searchKey}
+              onChange={(e) => setSearchKey(e.target.value)}
+              endAdornment={
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={4} container justifyContent="flex-end">
+          <Checkbox
+            checked={onlyFavorites}
+            onChange={(e) => setOnlyFavorites(e.target.checked)}
+            icon={<FavoriteBorderIcon />}
+            checkedIcon={<FavoriteIcon />}
+          />
+        </Grid>
+      </Grid>
       <Grid container spacing={2} justifyContent="center">
         <PokemonCards
-          pokemonList={data?.results}
+          pokemonList={pokemonList}
           getIsFavorite={getIsFavorite}
           getInComparison={getInComparison}
           onToogleFavorite={handleToogleFavorite}
@@ -108,6 +147,6 @@ export const PokemonList = () => {
           Load more
         </Button>
       </Stack>
-    </>
+    </Stack>
   );
 };

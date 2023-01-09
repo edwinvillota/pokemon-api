@@ -34,7 +34,7 @@ export const ComparisonModal = ({
   handleCloseModal,
   ...props
 }: ComparisonModalProps) => {
-  const { data: pokemonList } = useGetAllPokemonQuery({});
+  const { data: pokemonList } = useGetAllPokemonQuery({ infinityScroll: true });
   const comparison = useAppSelector((state) => state.pokemon.comparison);
 
   const pokemon1 = useMemo(() => {
